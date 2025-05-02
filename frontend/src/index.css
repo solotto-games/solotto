@@ -1,0 +1,593 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* ─── Root Variables ───────────────────────────────────────────── */
+:root {
+  /* Backgrounds & Surfaces */
+  --color-bg: #1a002c; /* Very dark indigo */
+  --color-surface: #2e0045; /* Midnight purple */
+  --color-card: rgba(31, 41, 55, 0.8); /* Card background (adjusted) */
+  --color-card-dark: rgba(17, 24, 39, 1); /* Darker card variant */
+  --color-card-shadow: rgba(0, 0, 0, 0.4);
+
+  /* Text */
+  --color-text-primary: #ffffff; /* Pure white */
+  --color-text-secondary: #e0e0e0; /* Light warm grey */
+  --color-text-muted: rgba(156, 163, 175, 1); /* Muted grey */
+
+  /* Neon Accents */
+  --color-accent: #ff1ac6; /* Vivid magenta */
+  --color-accent-alt: #9a00ff; /* Electric violet */
+  --color-highlight: #00e5ff; /* Cyan flash */
+  --color-gradient-start: #818cf8; /* Gradient for titles/buttons */
+  --color-gradient-end: #22d3ee; /* Gradient for titles/buttons */
+
+  /* Borders & Dividers */
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-border-dark: rgba(55, 65, 81, 1);
+
+  /* Spacing & Sizing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+
+  /* Radius & Transitions */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --transition-fast: 150ms ease;
+  --transition-md: 300ms ease;
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --font-mono: monospace;
+}
+
+/* ─── Base Styles ─────────────────────────────────────────────── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  font-family: var(--font-sans);
+  background: radial-gradient(circle at top, var(--color-bg), #0f001f);
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--color-accent-alt);
+}
+
+h1, h2, h3 {
+  color: var(--color-accent-alt);
+  font-weight: 700;
+  margin-bottom: var(--space-md);
+}
+
+/* ─── Layout Containers ──────────────────────────────────────── */
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.app-main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: var(--space-2xl) var(--space-lg);
+}
+
+.solotto-container {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-xl);
+  box-shadow: 0 0 24px var(--color-card-shadow);
+  border: 1px solid var(--color-border);
+}
+
+
+/* ─── Lottery Container ──────────────────────────────────────── */
+.lottery-container {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: var(--space-lg) var(--space-md);
+}
+
+/* ─── Header Section ─────────────────────────────────────────── */
+.lottery-header {
+  text-align: center;
+  margin-bottom: var(--space-2xl);
+}
+
+.header-content {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.header-logo {
+  width: 3rem;
+  height: 3rem;
+}
+
+.header-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  background: linear-gradient(to right, var(--color-gradient-start), var(--color-gradient-end));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.header-subtitle {
+  color: var(--color-text-muted);
+  font-size: 1.125rem;
+}
+
+/* ─── Main Card ─────────────────────────────────────────────── */
+.main-card {
+  background: linear-gradient(135deg, var(--color-card), rgba(17, 24, 39, 0.9));
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-lg);
+  border: 1px solid var(--color-border-dark);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* ─── Pot Selector (Tabs) ────────────────────────────────────── */
+.pot-selector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.pot-tab {
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-dark);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.pot-tab.active {
+  background-color: rgba(79, 70, 229, 0.2);
+  border-color: var(--color-gradient-start);
+}
+
+.pot-tab:not(.active) {
+  background-color: rgba(55, 65, 81, 0.5);
+}
+
+.pot-tab:not(.active):hover {
+  background-color: rgba(55, 65, 81, 0.7);
+}
+
+.pot-name {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+  color: var(--color-text-primary);
+}
+
+.pot-description {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+/* ─── Timer Section ──────────────────────────────────────────── */
+.timer-container {
+  background-color: var(--color-card-dark);
+  padding: var(--space-lg);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-lg);
+  border: 1px solid var(--color-border-dark);
+  text-align: center;
+}
+
+.timer-label {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  margin-bottom: var(--space-sm);
+}
+
+.timer-display {
+  font-size: 2.25rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--color-gradient-start);
+}
+
+/* ─── Entry Form ─────────────────────────────────────────────── */
+.entry-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.amount-input {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  width: 100%;
+  position: relative;
+}
+
+.amount-input input {
+  flex: 1;
+  padding: var(--space-md) var(--space-lg);
+  background-color: var(--color-card-dark);
+  border: 1px solid var(--color-border-dark);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-primary);
+  font-size: 1.25rem;
+  font-weight: 500;
+  text-align: left;
+  width: 100%;
+}
+
+.amount-input input::placeholder {
+  color: var(--color-text-muted);
+  opacity: 0.7;
+}
+
+.amount-input input:focus {
+  outline: none;
+  border-color: var(--color-gradient-start);
+}
+
+.sol-label {
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.enter-button {
+  padding: var(--space-lg) var(--space-xl); /* Increased padding for a larger button */
+  background: linear-gradient(to right, var(--color-gradient-start), var(--color-gradient-end));
+  color: var(--color-text-primary);
+  font-weight: 600;
+  font-size: 1.5rem; /* Increased font size for larger text */
+  border-radius: var(--radius-md); /* Slightly larger border-radius for balance */
+  border: none;
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.enter-button:hover {
+  transform: scale(1.05);
+}
+
+/* ─── Participants Section ───────────────────────────────────── */
+.participants-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-md);
+}
+
+.participants-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.participants-count {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+}
+
+.participants-list {
+  max-height: 24rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.participant-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-md);
+  background-color: rgba(17, 24, 39, 0.5);
+  border: 1px solid var(--color-border-dark);
+  border-radius: var(--radius-sm);
+}
+
+.participant-wallet {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--color-text-primary);
+}
+
+.participant-amount {
+  color: var(--color-gradient-start);
+  font-weight: 600;
+}
+
+.empty-state {
+  text-align: center;
+  padding: var(--space-lg);
+  color: var(--color-text-muted);
+}
+
+/* ─── Info Footer ────────────────────────────────────────────── */
+.info-footer {
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+/* ─── Navbar ─────────────────────────────────────────────────── */
+.solotto-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-md) var(--space-xl);
+  background: linear-gradient(to right, #2e003e, #42005e);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: 0 2px 8px var(--color-card-shadow);
+}
+
+.solotto-navbar__logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-weight: bold;
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.solotto-navbar__logo-img {
+  height: 36px;
+  width: 36px;
+  object-fit: contain;
+}
+
+.solotto-navbar__links {
+  display: flex;
+  gap: var(--space-lg);
+  align-items: center;
+  font-size: 15px;
+}
+
+.solotto-navbar__links a {
+  color: var(--color-accent);
+  transition: color var(--transition-fast);
+}
+
+.solotto-navbar__links a:hover {
+  color: var(--color-text-primary);
+}
+
+.solotto-navbar__button {
+  margin-left: auto;
+}
+
+
+/* ─── Footer ─────────────────────────────────────────────────── */
+.solotto-footer {
+  background-color: #1a001f;
+  color: var(--color-accent);
+  padding: var(--space-lg);
+  border-top: 1px solid #330040;
+  font-size: 14px;
+  text-align: center;
+}
+
+.solotto-footer__content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+.solotto-footer__left,
+.solotto-footer__center,
+.solotto-footer__right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.solotto-footer__logo {
+  height: 24px;
+  width: 24px;
+  object-fit: contain;
+}
+
+.solotto-footer a {
+  color: var(--color-accent);
+  transition: color var(--transition-fast);
+}
+
+.solotto-footer a:hover {
+  color: var(--color-text-primary);
+}
+
+/* Copy button styling (inside footer) */
+.solotto-footer__content button {
+  background: transparent;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 13px;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+/* ─── Buttons & Wallet Button ───────────────────────────────── */
+button,
+.wallet-adapter-button {
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-alt)) !important;
+  color: var(--color-text-primary) !important;
+  border: none !important;
+  border-radius: var(--radius-md) !important;
+  padding: var(--space-sm) var(--space-lg) !important;
+  font-weight: 600 !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2) !important;
+  transition: background var(--transition-md), transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+button:hover,
+.wallet-adapter-button:hover {
+  background: linear-gradient(135deg, var(--color-accent-alt), var(--color-accent)) !important;
+  transform: translateY(-2px) scale(1.03) !important;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3) !important;
+}
+
+button:active,
+.wallet-adapter-button:active {
+  transform: scale(0.97) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+button:focus,
+.wallet-adapter-button:focus {
+  outline: 2px solid var(--color-highlight) !important;
+  outline-offset: 2px !important;
+}
+
+/* ─── Inputs ─────────────────────────────────────────────────── */
+input, .sol-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-sm) var(--space-md);
+  font-size: 1rem;
+}
+
+/* ─── Pot Toggle (Legacy) ────────────────────────────────────── */
+.pot-toggle {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.pot-toggle button {
+  flex: 1;
+  background: transparent !important;
+  color: var(--color-text-primary) !important;
+  border: 1px solid var(--color-border) !important;
+  box-shadow: none !important;
+}
+
+.pot-toggle button.active {
+  background: var(--color-surface) !important;
+  border-color: var(--color-accent) !important;
+  color: var(--color-accent) !important;
+}
+
+/* ─── Animations ─────────────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* ─── Mobile Responsiveness ───────────────────────────────────── */
+@media (max-width: 768px) {
+  .app-main {
+    padding: var(--space-lg) var(--space-md);
+    align-items: stretch;
+  }
+
+  .solotto-container {
+    padding: var(--space-lg);
+  }
+
+  .header-title {
+    font-size: 1.75rem;
+  }
+
+  .header-subtitle {
+    font-size: 1rem;
+  }
+
+  .pot-selector {
+    grid-template-columns: 1fr;
+  }
+
+  .timer-display {
+    font-size: 1.75rem;
+  }
+
+  .enter-button {
+    font-size: 1.125rem;
+    padding: var(--space-md) var(--space-lg);
+    width: 100%;
+  }
+
+  .amount-input {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .participants-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+
+  .solotto-navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+    padding: var(--space-md);
+  }
+
+  .solotto-navbar__links {
+    flex-direction: column;
+    gap: var(--space-sm);
+    align-items: flex-start;
+  }
+
+  .solotto-footer__content {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .solotto-footer__left,
+  .solotto-footer__center,
+  .solotto-footer__right {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .wallet-adapter-button {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+}
+
