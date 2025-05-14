@@ -4,8 +4,10 @@ import { Link } from 'react-router-dom';
 export default function Footer() {
   const [copied, setCopied] = useState(false);
 
+  const CA = "Soon";
+
   const handleCopy = () => {
-    navigator.clipboard.writeText("Soon");
+    navigator.clipboard.writeText(CA);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -35,7 +37,7 @@ export default function Footer() {
         {/* Right: Socials */}
         <div className="solotto-footer__right">
           <a href="https://x.com/solotto_onsol" target="_blank" rel="noopener noreferrer">Twitter</a>
-          <a href="https://github.com/solotto-fun/solotto" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://github.com/solotto-games/solotto" target="_blank" rel="noopener noreferrer">GitHub</a>
         </div>
 
         {/* Far Right: Copy Button */}
@@ -58,8 +60,8 @@ export default function Footer() {
             whiteSpace: 'nowrap'
           }}
         >
-          {copied ? "Copied!" : "CA: Soon"}
-        </button>
+{copied ? "Copied!" : CA === "Soon" ? "CA: Soon" : `CA: ${CA.slice(0, 4)}...${CA.slice(-4)}`}
+         </button>
       </div>
     </footer>
   );
