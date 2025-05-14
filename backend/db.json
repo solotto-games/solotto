@@ -1,4 +1,120 @@
 {
-  "participants": [],
-  "history": []
+  "smallPotParticipants": [
+    {
+      "wallet": "G7qVYs334AkqZLtuzT9mCUd2vRr2Uy1CNo1HBwFayQZQ",
+      "amount": 0.02
+    }
+  ],
+  "bigPotParticipants": [],
+  "smallHistory": [
+    {
+      "time": "2025-05-14T00:00:05.141Z",
+      "winner": "G7qVYs334AkqZLtuzT9mCUd2vRr2Uy1CNo1HBwFayQZQ",
+      "pot": 0.0194,
+      "tx": {
+        "recentBlockhash": "EpkgL2Rc76aUf3rJQk9uF716czb4MiTH4uBQGjUh3R6D",
+        "feePayer": null,
+        "nonceInfo": null,
+        "instructions": [
+          {
+            "keys": [
+              {
+                "pubkey": "EhQewZWWVA1jqZqNpAGCDLamh3cAD5nqMefWkfuffdNq",
+                "isSigner": true,
+                "isWritable": true
+              },
+              {
+                "pubkey": "G7qVYs334AkqZLtuzT9mCUd2vRr2Uy1CNo1HBwFayQZQ",
+                "isSigner": false,
+                "isWritable": true
+              }
+            ],
+            "programId": "11111111111111111111111111111111",
+            "data": [
+              2,
+              0,
+              0,
+              0,
+              64,
+              5,
+              40,
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "signers": [
+          "EhQewZWWVA1jqZqNpAGCDLamh3cAD5nqMefWkfuffdNq"
+        ]
+      }
+    },
+    {
+      "time": "2025-05-14T06:00:01.467Z",
+      "winner": "G7qVYs334AkqZLtuzT9mCUd2vRr2Uy1CNo1HBwFayQZQ",
+      "pot": 0.0194,
+      "tx": {
+        "recentBlockhash": "BnL3RCtLxoN3phXQ1JSCinxQpRhUQp5Vg1SQECoxkdqZ",
+        "feePayer": null,
+        "nonceInfo": null,
+        "instructions": [
+          {
+            "keys": [
+              {
+                "pubkey": "EhQewZWWVA1jqZqNpAGCDLamh3cAD5nqMefWkfuffdNq",
+                "isSigner": true,
+                "isWritable": true
+              },
+              {
+                "pubkey": "G7qVYs334AkqZLtuzT9mCUd2vRr2Uy1CNo1HBwFayQZQ",
+                "isSigner": false,
+                "isWritable": true
+              }
+            ],
+            "programId": "11111111111111111111111111111111",
+            "data": [
+              2,
+              0,
+              0,
+              0,
+              64,
+              5,
+              40,
+              1,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "signers": [
+          "EhQewZWWVA1jqZqNpAGCDLamh3cAD5nqMefWkfuffdNq"
+        ]
+      }
+    },
+    {
+      "time": "2025-05-14T16:00:01.192Z",
+      "winner": "G7qVYs334AkqZLtuzT9mCUd2vRr2Uy1CNo1HBwFayQZQ",
+      "pot": 0.0194,
+      "tx": "2PmVs3YzqXKdu8G1xtbgr9D7BtuFHdZccDYZc23JWHexkALAbdGFnXhnhVwtXer1cUbJfYHybKEgbp5vXMgEEj58",
+      "participants": 1,
+      "totalPot": 0.02,
+      "potType": "small"
+    }
+  ],
+  "bigHistory": [],
+  "lastWinner": {
+    "small": {
+      "time": "2025-05-14T16:00:01.192Z",
+      "winner": "G7qVYs334AkqZLtuzT9mCUd2vRr2Uy1CNo1HBwFayQZQ",
+      "pot": 0.0194,
+      "tx": "2PmVs3YzqXKdu8G1xtbgr9D7BtuFHdZccDYZc23JWHexkALAbdGFnXhnhVwtXer1cUbJfYHybKEgbp5vXMgEEj58",
+      "participants": 1,
+      "totalPot": 0.02,
+      "potType": "small"
+    }
+  }
 }

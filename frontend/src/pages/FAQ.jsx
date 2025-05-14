@@ -38,7 +38,7 @@ const FAQ_ITEMS = [
   },
   {
     question: 'Is there a minimum entry amount?',
-    answer: 'Yes, the minimum entry is typically 0.1 SOL to ensure transaction viability and fairness. This may adjust over time.'
+answer: 'No, there is currently no minimum entry amount. You can enter with any amount of SOL.'
   },
   {
     question: 'Can I withdraw my entry if I don\'t win?',
@@ -46,7 +46,7 @@ const FAQ_ITEMS = [
   },
   {
     question: 'Where can I buy $LOTTO?',
-    answer: 'You can buy $LOTTO on <a href="https://pump.fun/" target="_blank" rel="noopener noreferrer">Pump.fun</a> or other Solana-based DEXs once liquidity is available.'
+    answer: 'You can buy $LOTTO on <a href="https://letsbonk.fun/" target="_blank" rel="noopener noreferrer">letsbonk.fun</a> or other Solana-based DEXs once liquidity is available.'
   }
 ];
 
