@@ -18,7 +18,7 @@ export default function Navbar() {
         <Link to="/about">About</Link>
         <Link to="/faq">FAQ</Link>
         <Link to="/how-it-works">How it Works</Link>
-        <a href="https://letsbonk.fun/" target="_blank" rel="noopener noreferrer">letsbonk.fun</a>
+        <a href="https://dexscreener.com/solana" target="_blank" rel="noopener noreferrer">$LOTTO</a>
       </div>
 
       <WalletMultiButton className="solotto-navbar__button" />

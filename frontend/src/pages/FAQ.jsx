@@ -43,10 +43,6 @@ answer: 'No, there is currently no minimum entry amount. You can enter with any 
   {
     question: 'Can I withdraw my entry if I don\'t win?',
     answer: 'No — once submitted, your SOL is committed to the pot. If you win, you receive the full prize pool. If not, the contribution supports future rewards.'
-  },
-  {
-    question: 'Where can I buy $LOTTO?',
-    answer: 'You can buy $LOTTO on <a href="https://letsbonk.fun/" target="_blank" rel="noopener noreferrer">letsbonk.fun</a> or other Solana-based DEXs once liquidity is available.'
   }
 ];
 
