@@ -362,9 +362,22 @@ function Lottery() {
       </div>
   
       <div className="info-footer">
-        <p>All draws are conducted transparently on-chain</p>
-        <p>Admin fee: 2% | Platform fee: 1%</p>
+  <p>All draws are conducted transparently on-chain</p>
+  <div className="boost-info">
+    How to boost your chances
+    <div className="info-hint">
+      <span className="info-icon">i</span>
+      <div className="info-tooltip">
+        <p>Your chances increase with:</p>
+        <ul>
+          <li>Higher SOL entries (your SOL ÷ total pot)</li>
+          <li>1.3× multiplier when holding $LOTTO</li>
+        </ul>
       </div>
+    </div>
+  </div>
+  <p>Admin fee: 2% | Platform fee: 1%</p>
+</div>
     </motion.div>
   );
 }
