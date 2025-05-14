@@ -296,7 +296,7 @@ function Lottery() {
                   {winner.winner.slice(0, 4)}...{winner.winner.slice(-4)}
                 </a>
                 <div>{winner.pot} SOL</div>
-                <div>{new Date(winner.time).toLocaleString()}</div>
+                <div>{new Date(winner.time).toLocaleString()} (UTC)</div>
               </div>
             ))
           ) : (

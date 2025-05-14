@@ -1,10 +1,5 @@
 {
-  "smallPotParticipants": [
-    {
-      "wallet": "G7qVYs334AkqZLtuzT9mCUd2vRr2Uy1CNo1HBwFayQZQ",
-      "amount": 0.02
-    }
-  ],
+  "smallPotParticipants": [],
   "bigPotParticipants": [],
   "smallHistory": [
     {
@@ -103,15 +98,24 @@
       "participants": 1,
       "totalPot": 0.02,
       "potType": "small"
+    },
+    {
+      "time": "2025-05-14T18:00:04.231Z",
+      "winner": "G7qVYs334AkqZLtuzT9mCUd2vRr2Uy1CNo1HBwFayQZQ",
+      "pot": 0.0194,
+      "tx": "5KnpNe1dHfx5dci782FkN6iFrqBTR8EC6VM7pfK6VJbFEZw9hjzNMq6imcRca1bgCvXf6A2KvWrGPQiMzDt1UJh4",
+      "participants": 1,
+      "totalPot": 0.02,
+      "potType": "small"
     }
   ],
   "bigHistory": [],
   "lastWinner": {
     "small": {
-      "time": "2025-05-14T16:00:01.192Z",
+      "time": "2025-05-14T18:00:04.231Z",
       "winner": "G7qVYs334AkqZLtuzT9mCUd2vRr2Uy1CNo1HBwFayQZQ",
       "pot": 0.0194,
-      "tx": "2PmVs3YzqXKdu8G1xtbgr9D7BtuFHdZccDYZc23JWHexkALAbdGFnXhnhVwtXer1cUbJfYHybKEgbp5vXMgEEj58",
+      "tx": "5KnpNe1dHfx5dci782FkN6iFrqBTR8EC6VM7pfK6VJbFEZw9hjzNMq6imcRca1bgCvXf6A2KvWrGPQiMzDt1UJh4",
       "participants": 1,
       "totalPot": 0.02,
       "potType": "small"
