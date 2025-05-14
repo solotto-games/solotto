@@ -125,9 +125,9 @@ h1, h2, h3 {
 }
 
 .header-logo {
-  width: 96px;
-  height: 96px;
-  margin-bottom: 0.5rem;
+  width: 200px;
+  height: 200px;
+  margin-top: -3rem;
 }
 
 .header-title {
