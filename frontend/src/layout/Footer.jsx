@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 export default function Footer() {
   const [copied, setCopied] = useState(false);
 
-  const CA = "Soon";
+  const CA = "7aYvpuG7WTU4dDGJtHq1vAF3fjQXwksqLzsFjXtPxEcz";
 
   const handleCopy = () => {
     navigator.clipboard.writeText(CA);
