@@ -212,6 +212,15 @@ app.get('/last-winner/main', (req, res) => {
   res.json({ ok: true, ...last });
 });
 
+app.post('/admin/clear-winners', (req, res) => {
+  const db = loadDB();
+  db.mainHistory = [];
+  db.lastWinner.main = {};
+  saveDB(db);
+  res.json({ ok: true, message: 'Winners cleared.' });
+});
+
+
 app.listen(process.env.PORT, () => {
   console.log(`🚀 Rapid Lottery backend on http://localhost:${process.env.PORT}`);
   

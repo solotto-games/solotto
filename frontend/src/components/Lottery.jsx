@@ -53,29 +53,30 @@ function Lottery() {
   const [participants, setParticipants] = useState([]);
   const [totalPot, setTotalPot] = useState(0);
   const [recentWinners, setRecentWinners] = useState([]);
+  const [lastWinnerAddress, setLastWinnerAddress] = useState(null);
   const hasLotto = useLottoBalance();
+  const fetchWinners = () => {
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/history/main`)
+      .then(res => setRecentWinners(res.data.slice(0, 3)))
+      .catch(console.error);
+  };
 
   useEffect(() => {
-    const fetchParticipants = () => {
-      axios.get(`${import.meta.env.VITE_BACKEND_URL}/participants/main`)
-        .then(res => {
-          setParticipants(res.data);
-          setTotalPot(res.data.reduce((sum, p) => sum + p.amount, 0));
-        })
-        .catch(console.error);
-    };
+  const fetchParticipants = () => {
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/participants/main`)
+      .then(res => {
+        setParticipants(res.data);
+        setTotalPot(res.data.reduce((sum, p) => sum + p.amount, 0));
+      })
+      .catch(console.error);
+  };
 
-    const fetchWinners = () => {
-      axios.get(`${import.meta.env.VITE_BACKEND_URL}/history/main`)
-        .then(res => setRecentWinners(res.data.slice(0, 3)))
-        .catch(console.error);
-    };
+  fetchParticipants();
+  fetchWinners(); 
+  const iv = setInterval(fetchParticipants, 5000);
+  return () => clearInterval(iv);
+}, []);
 
-    fetchParticipants();
-    fetchWinners();
-    const iv = setInterval(fetchParticipants, 5000);
-    return () => clearInterval(iv);
-  }, []);
 
   const enter = async () => {
     try {
@@ -164,48 +165,70 @@ function Lottery() {
         <div className="timer-container">
           <div className="timer-label">NEXT DRAW IN</div>
           <Countdown
-            date={deadline}
-            onComplete={async () => {
-              setDeadline(getNextDrawUTC());
-              let attempts = 0;
-              const checkWinner = async () => {
-                try {
-                  const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/last-winner/main`);
-                  
-                  if (res.data.ok) {
-                    toast.success(
-                      <div onClick={() => copyToClipboard(res.data.winner)} style={{ cursor: 'pointer' }}>
-                        🎉 Winner: {res.data.winner.slice(0, 4)}...{res.data.winner.slice(-4)} 
-                        <br />Won: {res.data.pot} SOL
-                        <br />TX: {res.data.tx.slice(0, 4)}...{res.data.tx.slice(-4)}
-                        <br /><small>(Click to copy address)</small>
-                      </div>,
-                      { duration: 10000, style: { background: '#333', color: '#fff', padding: '16px', borderRadius: '8px' } }
-                    );
-                  } else if (attempts < 3) {
-                    attempts++;
-                    setTimeout(checkWinner, 2000);
-                  } else {
-                    toast('No winner this round (no participants)');
-                  }
-                } catch (err) {
-                  console.error('Error fetching winner:', err);
-                  if (attempts < 3) {
-                    attempts++;
-                    setTimeout(checkWinner, 2000);
-                  } else {
-                    toast.error('Failed to fetch winner details.');
-                  }
+  key={deadline} // 👈 this line is the main fix for timer getting stuck
+  date={deadline}
+  onComplete={() => {
+    const next = getNextDrawUTC();
+    setDeadline(next); // ✅ reset the timer
+
+    let attempts = 0;
+    const checkWinner = async () => {
+      try {
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/last-winner/main`);
+        if (res.data.ok) {
+          const newWinner = res.data.winner;
+          if (newWinner !== lastWinnerAddress) {
+            setLastWinnerAddress(newWinner);
+            fetchWinners();
+            toast.success(
+              <div onClick={() => copyToClipboard(newWinner)} style={{ cursor: 'pointer' }}>
+                🎉 Winner: {newWinner.slice(0, 4)}...{newWinner.slice(-4)}
+                <br />Won: {res.data.pot} SOL
+                <br />TX: {res.data.tx.slice(0, 4)}...{res.data.tx.slice(-4)}
+                <br /><small>(Click to copy address)</small>
+              </div>,
+              {
+                duration: 10000,
+                style: {
+                  background: '#333',
+                  color: '#fff',
+                  padding: '16px',
+                  borderRadius: '8px'
                 }
-              };
-              setTimeout(checkWinner, 3000);
-            }}
-            renderer={({ minutes, seconds, completed }) => (
-              <div className="timer-display">
-                {completed ? '🎉 Drawing Winner...' : `${String(minutes).padStart(2, '0')}m ${String(seconds).padStart(2, '0')}s`}
-              </div>
-            )}
-          />
+              }
+            );
+          } else if (attempts < 3) {
+            attempts++;
+            setTimeout(checkWinner, 2000);
+          } else {
+            toast('Waiting for new winner...');
+          }
+        } else if (attempts < 3) {
+          attempts++;
+          setTimeout(checkWinner, 2000);
+        } else {
+          toast('No winner this round (no participants)');
+        }
+      } catch (err) {
+        console.error('Error fetching winner:', err);
+        if (attempts < 3) {
+          attempts++;
+          setTimeout(checkWinner, 2000);
+        } else {
+          toast.error('Failed to fetch winner details.');
+        }
+      }
+    };
+
+    setTimeout(checkWinner, 3000);
+  }}
+  renderer={({ minutes, seconds, completed }) => (
+    <div className="timer-display">
+      {completed ? '🎉 Drawing Winner...' : `${String(minutes).padStart(2, '0')}m ${String(seconds).padStart(2, '0')}s`}
+    </div>
+  )}
+/>
+
         </div>
   
         {/* Entry Form */}
@@ -248,7 +271,7 @@ function Lottery() {
                   {winner.winner.slice(0, 4)}...{winner.winner.slice(-4)}
                 </a>
                 <div>{winner.pot} SOL</div>
-                <div>{new Date(winner.time).toLocaleString()} (UTC)</div>
+                <div>{new Date(winner.time).toLocaleString()}</div>
               </div>
             ))
           ) : (
