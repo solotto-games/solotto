@@ -9,10 +9,8 @@ dotenv.config();
 
 function loadDB() {
   const defaultStructure = {
-    smallPotParticipants: [],
-    bigPotParticipants: [],
-    smallHistory: [],
-    bigHistory: [],
+    mainPotParticipants: [],
+    mainHistory: [],
     lastWinner: {}
   };
 
@@ -49,9 +47,9 @@ app.use(cors());
 app.use(bodyParser.json());
 
 app.post('/enter', async (req, res) => {
-  const { wallet, amount, effectiveAmount, pot, tx, hasLotto } = req.body;
+  const { wallet, amount, effectiveAmount, tx, hasLotto } = req.body;
 
-  if (!wallet || !amount || !pot || !tx) {
+  if (!wallet || !amount || !tx) {
     return res.status(400).json({ error: 'Missing required fields' });
   }
 
@@ -106,14 +104,7 @@ app.post('/enter', async (req, res) => {
       hasLotto: !!hasLotto
     };
 
-    if (pot === 'small') {
-      db.smallPotParticipants.push(entry);
-    } else if (pot === 'big') {
-      db.bigPotParticipants.push(entry);
-    } else {
-      return res.status(400).json({ error: 'Invalid pot type' });
-    }
-
+    db.mainPotParticipants.push(entry);
     saveDB(db);
     return res.json({ ok: true });
   } catch (err) {
@@ -122,28 +113,22 @@ app.post('/enter', async (req, res) => {
   }
 });
 
-app.get('/participants/:pot', (req, res) => {
+app.get('/participants/main', (req, res) => {
   const db = loadDB();
-  const pot = req.params.pot;
-  if (pot === 'small') return res.json(db.smallPotParticipants);
-  if (pot === 'big') return res.json(db.bigPotParticipants);
-  res.status(400).json({ error: 'Invalid pot type' });
+  res.json(db.mainPotParticipants);
 });
 
-app.get('/history/:pot', (req, res) => {
+app.get('/history/main', (req, res) => {
   const db = loadDB();
-  const pot = req.params.pot;
-  if (pot === 'small') return res.json(db.smallHistory.slice().reverse());
-  if (pot === 'big') return res.json(db.bigHistory.slice().reverse());
-  res.status(400).json({ error: 'Invalid pot type' });
+  res.json(db.mainHistory.slice().reverse());
 });
 
-async function drawPot(potType, participantKey, historyKey) {
+async function drawPot() {
   const db = loadDB();
-  const participants = db[participantKey];
+  const participants = db.mainPotParticipants;
   
   if (!participants || !participants.length) {
-    console.log(`No entries for ${potType} pot.`);
+    console.log('No entries for current pot.');
     return { ok: false, message: 'No participants' };
   }
 
@@ -184,26 +169,25 @@ async function drawPot(potType, participantKey, historyKey) {
       pot: payout,
       tx: sig,
       participants: participants.length,
-      totalPot: total,
-      potType
+      totalPot: total
     };
 
-    db.lastWinner[potType] = winnerData;
-    db[historyKey].push(winnerData);
-    db[participantKey] = [];
+    db.lastWinner.main = winnerData;
+    db.mainHistory.push(winnerData);
+    db.mainPotParticipants = [];
     
     saveDB(db);
-    console.log(`🎯 ${potType.toUpperCase()} WINNER: ${winner.wallet} | PRIZE: ${payout} SOL | TX: ${sig}`);
+    console.log(`🎯 MAIN POT WINNER: ${winner.wallet} | PRIZE: ${payout} SOL | TX: ${sig}`);
     return { ok: true, ...winnerData };
   } catch (err) {
-    console.error(`❌ Failed to send payout for ${potType} pot:`, err);
+    console.error('❌ Failed to send payout:', err);
     return { ok: false, error: err.message };
   }
 }
 
-app.post('/draw-small', async (req, res) => {
+app.post('/draw', async (req, res) => {
   try {
-    const result = await drawPot('small', 'smallPotParticipants', 'smallHistory');
+    const result = await drawPot();
     if (result.ok) {
       res.json(result);
     } else {
@@ -214,28 +198,9 @@ app.post('/draw-small', async (req, res) => {
   }
 });
 
-app.post('/draw-big', async (req, res) => {
-  try {
-    const result = await drawPot('big', 'bigPotParticipants', 'bigHistory');
-    if (result.ok) {
-      res.json(result);
-    } else {
-      res.status(400).json(result);
-    }
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-app.get('/last-winner/:pot', (req, res) => {
+app.get('/last-winner/main', (req, res) => {
   const db = loadDB();
-  const pot = req.params.pot;
-  
-  if (!['small', 'big'].includes(pot)) {
-    return res.status(400).json({ error: 'Invalid pot type' });
-  }
-
-  const last = db.lastWinner?.[pot];
+  const last = db.lastWinner?.main;
   
   if (!last) {
     return res.status(404).json({ 
@@ -248,7 +213,7 @@ app.get('/last-winner/:pot', (req, res) => {
 });
 
 app.listen(process.env.PORT, () => {
-  console.log(`🚀 Jackpot backend on http://localhost:${process.env.PORT}`);
+  console.log(`🚀 Rapid Lottery backend on http://localhost:${process.env.PORT}`);
   
   connection.getBalance(admin.publicKey)
     .then(balance => {
@@ -259,20 +224,12 @@ app.listen(process.env.PORT, () => {
     });
 });
 
-cron.schedule('0 * * * *', async () => {
-  console.log('⏰ Running hourly draw...');
+// Run every 10 minutes
+cron.schedule('*/10 * * * *', async () => {
+  console.log('⏰ Running 10-minute draw...');
   try {
-    await drawPot('small', 'smallPotParticipants', 'smallHistory');
+    await drawPot();
   } catch (err) {
-    console.error('❌ Hourly draw failed:', err);
-  }
-});
-
-cron.schedule('0 0 * * 0', async () => {
-  console.log('⏰ Running weekly draw...');
-  try {
-    await drawPot('big', 'bigPotParticipants', 'bigHistory');
-  } catch (err) {
-    console.error('❌ Weekly draw failed:', err);
+    console.error('❌ Draw failed:', err);
   }
 });

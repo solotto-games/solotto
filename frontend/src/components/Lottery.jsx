@@ -6,8 +6,7 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 import Countdown from "react-countdown";
 
-const HOUR_MS = 60 * 60 * 1000;
-const WEEK_MS = 7 * 24 * HOUR_MS;
+const MINUTE_MS = 60 * 1000;
 const LOTTO_TOKEN_MINT = new PublicKey('879Ga97qGKc5wdKjUScC7oH16yockWYfSxu8XBbybonk');
 const adminPublicKey = new PublicKey("EhQewZWWVA1jqZqNpAGCDLamh3cAD5nqMefWkfuffdNq");
 
@@ -17,20 +16,8 @@ const copyToClipboard = (text) => {
   toast.success('Copied to clipboard!');
 };
 
-function getNextHourUTC() {
-  return Math.ceil(Date.now() / HOUR_MS) * HOUR_MS;
-}
-
-function getNextMondayUTC() {
-  const now = new Date();
-  const day = now.getUTCDay();
-  const daysUntilMon = (8 - day) % 7;
-  return new Date(Date.UTC(
-    now.getUTCFullYear(),
-    now.getUTCMonth(),
-    now.getUTCDate() + daysUntilMon,
-    0, 0, 0, 0
-  )).getTime();
+function getNextDrawUTC() {
+  return Math.ceil(Date.now() / (10 * MINUTE_MS)) * (10 * MINUTE_MS);
 }
 
 function useLottoBalance() {
@@ -61,12 +48,8 @@ function useLottoBalance() {
 function Lottery() {
   const { connection } = useConnection();
   const { publicKey, sendTransaction } = useWallet();
-  const [deadlines, setDeadlines] = useState({
-    small: getNextHourUTC(),
-    big: getNextMondayUTC()
-  });
+  const [deadline, setDeadline] = useState(getNextDrawUTC());
   const [amount, setAmount] = useState('');
-  const [potType, setPotType] = useState('small');
   const [participants, setParticipants] = useState([]);
   const [totalPot, setTotalPot] = useState(0);
   const [recentWinners, setRecentWinners] = useState([]);
@@ -74,7 +57,7 @@ function Lottery() {
 
   useEffect(() => {
     const fetchParticipants = () => {
-      axios.get(`${import.meta.env.VITE_BACKEND_URL}/participants/${potType}`)
+      axios.get(`${import.meta.env.VITE_BACKEND_URL}/participants/main`)
         .then(res => {
           setParticipants(res.data);
           setTotalPot(res.data.reduce((sum, p) => sum + p.amount, 0));
@@ -83,7 +66,7 @@ function Lottery() {
     };
 
     const fetchWinners = () => {
-      axios.get(`${import.meta.env.VITE_BACKEND_URL}/history/${potType}`)
+      axios.get(`${import.meta.env.VITE_BACKEND_URL}/history/main`)
         .then(res => setRecentWinners(res.data.slice(0, 3)))
         .catch(console.error);
     };
@@ -92,7 +75,7 @@ function Lottery() {
     fetchWinners();
     const iv = setInterval(fetchParticipants, 5000);
     return () => clearInterval(iv);
-  }, [potType]);
+  }, []);
 
   const enter = async () => {
     try {
@@ -126,7 +109,7 @@ function Lottery() {
         wallet: publicKey.toBase58(),
         amount: parseFloat(amount),
         effectiveAmount: parseFloat(effectiveAmount),
-        pot: potType,
+        pot: 'main',
         tx: sig,
         hasLotto
       });
@@ -150,14 +133,10 @@ function Lottery() {
   };
 
   const formatTime = (seconds) => {
-    const d = Math.floor(seconds / (3600 * 24));
-    const h = Math.floor((seconds % (3600 * 24)) / 3600);
-    const m = Math.floor((seconds % 3600) / 60);
+    const m = Math.floor(seconds / 60);
     const s = seconds % 60;
     const pad = (num) => String(num).padStart(2, '0');
-    return d > 0
-      ? `${d}d ${pad(h)}h ${pad(m)}m ${pad(s)}s`
-      : `${pad(h)}h ${pad(m)}m ${pad(s)}s`;
+    return `${pad(m)}m ${pad(s)}s`;
   };
 
   return (
@@ -172,49 +151,26 @@ function Lottery() {
           <img src="/logo.png" alt="Solana" className="header-logo" />
         </div>
         <p className="header-subtitle">
-          Decentralized, transparent lottery powered by Solana
+          Rapid 10-minute draws powered by Solotto
         </p>
       </div>
 
       <div className="main-card">
-        {/* Pot Selection Tabs */}
-        <div className="pot-selector">
-          {['small', 'big'].map((type) => (
-            <div
-              key={type}
-              onClick={() => setPotType(type)}
-              className={`pot-tab ${potType === type ? 'active' : ''}`}
-            >
-              <div className="pot-name">
-                {type === 'small' ? 'Hourly Draw' : 'Weekly Draw'}
-              </div>
-              <div className="pot-description">
-                {type === 'small' ? 'Every 60 minutes' : 'Every Sunday 00:00 UTC'}
-              </div>
-            </div>
-          ))}
-        </div>
-  
         {/* Pot Total Display */}
         <div className="pot-total-display">
-          Current Pot: {totalPot.toFixed(2)} SOL
         </div>
 
         {/* Countdown Timer */}
         <div className="timer-container">
           <div className="timer-label">NEXT DRAW IN</div>
           <Countdown
-            date={potType === 'small' ? deadlines.small : deadlines.big}
+            date={deadline}
             onComplete={async () => {
-              setDeadlines(prev => ({
-                ...prev,
-                [potType]: potType === 'small' ? getNextHourUTC() : getNextMondayUTC()
-              }));
-
+              setDeadline(getNextDrawUTC());
               let attempts = 0;
               const checkWinner = async () => {
                 try {
-                  const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/last-winner/${potType}`);
+                  const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/last-winner/main`);
                   
                   if (res.data.ok) {
                     toast.success(
@@ -244,13 +200,9 @@ function Lottery() {
               };
               setTimeout(checkWinner, 3000);
             }}
-            renderer={({ days, hours, minutes, seconds, completed }) => (
+            renderer={({ minutes, seconds, completed }) => (
               <div className="timer-display">
-                {completed ? '🎉 Drawing Winner...' :
-                  potType === 'small'
-                    ? `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
-                    : `${days > 0 ? `${days}d ` : ''}${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`
-                }
+                {completed ? '🎉 Drawing Winner...' : `${String(minutes).padStart(2, '0')}m ${String(seconds).padStart(2, '0')}s`}
               </div>
             )}
           />
@@ -325,7 +277,7 @@ function Lottery() {
                 </motion.div>
               ) : (
                 participants.map((p, i) => {
-                  const odds = totalPot > 0 ? (p.amount / totalPot) * 100 : 0;
+                  const odds = totalPot > 0 ? (p.effectiveAmount / totalPot) * 100 : 0;
                   return (
                     <motion.div
                       key={p.wallet + i}
@@ -362,22 +314,22 @@ function Lottery() {
       </div>
   
       <div className="info-footer">
-  <p>All draws are conducted transparently on-chain</p>
-  <div className="boost-info">
-    How to boost your chances
-    <div className="info-hint">
-      <span className="info-icon">i</span>
-      <div className="info-tooltip">
-        <p>Your chances increase with:</p>
-        <ul>
-          <li>Higher SOL entries (your SOL ÷ total pot)</li>
-          <li>1.3× multiplier when holding $LOTTO</li>
-        </ul>
+        <p>All draws are conducted transparently on-chain</p>
+        <div className="boost-info">
+          How to boost your chances
+          <div className="info-hint">
+            <span className="info-icon">i</span>
+            <div className="info-tooltip">
+              <p>Your chances increase with:</p>
+              <ul>
+                <li>Higher SOL entries (your SOL ÷ total pot)</li>
+                <li>1.3× multiplier when holding $LOTTO</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <p>Admin fee: 2% | Platform fee: 1%</p>
       </div>
-    </div>
-  </div>
-  <p>Admin fee: 2% | Platform fee: 1%</p>
-</div>
     </motion.div>
   );
 }
