@@ -17,32 +17,32 @@ const itemVariants = {
 
 const FAQ_ITEMS = [
   {
-    question: 'How do I enter a jackpot?',
-    answer: 'You can participate in either the hourly or weekly jackpot by sending SOL directly into the respective pot. Each SOL you contribute increases your chances of winning.'
+    question: 'How do I enter the jackpot?',
+    answer: 'Just connect your wallet and enter with any amount of SOL. Your contribution automatically counts as an entry for the next 10-minute draw.'
   },
   {
     question: 'How are winners chosen?',
-    answer: 'At the end of each round, a winner is randomly selected based on proportional SOL contributions. The more you contribute, the higher your odds — but every participant has a chance.'
+    answer: 'Every 10 minutes, one winner is selected at random. The more SOL you contribute, the higher your odds — but everyone has a chance to win.'
   },
   {
-    question: 'What is the difference between the Hourly and Weekly pots?',
-    answer: 'The Hourly Pot draws a winner every 60 minutes with smaller, more frequent rewards. The Weekly Pot draws once every 7 days and typically holds a much larger prize pool.'
+    question: 'How often does the draw happen?',
+    answer: 'Solotto draws a winner every 10 minutes, 24/7. No waiting around — rapid rounds mean constant chances to win.'
   },
   {
     question: 'What is $LOTTO and how does it affect my odds?',
-    answer: '$LOTTO is Solotto\'s native utility token. If your wallet holds any $LOTTO during an entry, your ticket chances are multiplied automatically. This bonus applies to both pots.'
+    answer: '$LOTTO is Solotto\'s native utility token. If your wallet holds any $LOTTO when entering, your entry gets a <strong>1.3× multiplier</strong>, increasing your chances of winning.'
   },
   {
     question: 'Is Solotto fully decentralized?',
-    answer: 'Yes — all jackpot logic is executed on-chain. Entries, draws, and payouts are handled by smart contracts, ensuring transparency and fairness.'
+    answer: 'Yes — all draws, entries, and payouts are executed via on-chain logic. Everything is transparent and verifiable on Solana.'
   },
   {
     question: 'Is there a minimum entry amount?',
-answer: 'No, there is currently no minimum entry amount. You can enter with any amount of SOL.'
+    answer: 'Nope. You can enter with any amount of SOL — even a fraction. Everyone has a shot at winning.'
   },
   {
     question: 'Can I withdraw my entry if I don\'t win?',
-    answer: 'No — once submitted, your SOL is committed to the pot. If you win, you receive the full prize pool. If not, the contribution supports future rewards.'
+    answer: 'No — once your SOL is entered, it goes into the prize pool. If you win, you take the whole pot. If not, your SOL supports the next round\'s rewards.'
   }
 ];
 

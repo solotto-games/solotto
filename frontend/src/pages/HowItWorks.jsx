@@ -21,24 +21,24 @@ const STEPS = [
     content: 'To participate, connect your Solana wallet using the "Connect Wallet" button on the top right. Phantom, Solflare, and other major wallets are supported.'
   },
   {
-    title: 'Step 2: Enter a Pot',
-    content: 'Choose between the Hourly or Weekly pot. Send in SOL to enter. Your contribution acts as your ticket — the more SOL you contribute, the higher your chance of winning.'
+    title: 'Step 2: Enter the Draw',
+    content: 'Enter the next 10-minute jackpot by sending in any amount of SOL. Your contribution acts as your ticket — the more SOL you contribute, the higher your chance of winning.'
   },
   {
     title: 'Step 3: Boost Your Odds with $LOTTO',
-    content: 'If your wallet holds any amount of our native token $LOTTO, your entries are automatically given a 1.3x multiplier — effectively increasing your odds.'
+    content: 'If your wallet holds any amount of our native token $LOTTO, your entries automatically receive a 1.3x multiplier — increasing your odds in each round.'
   },
   {
     title: 'Step 4: Wait for the Draw',
-    content: 'The Hourly Pot draws every 60 minutes. The Weekly Pot draws every 7 days. Winners are selected randomly, weighted by contribution size (and $LOTTO bonus if applicable).'
+    content: 'A winner is selected every 10 minutes using secure and transparent on-chain logic. Your odds are based on your contribution size and $LOTTO bonus if applicable.'
   },
   {
-    title: 'Step 5: Claim Winnings',
-    content: 'If you win, the prize SOL is automatically sent to your wallet — no claiming necessary. All transactions are handled transparently via smart contracts.'
+    title: 'Step 5: Receive Winnings Instantly',
+    content: 'If you win, the prize SOL is automatically sent to your wallet — no claiming needed. All transactions are handled by our smart contract system.'
   },
   {
     title: 'Transparency & Security',
-    content: 'Solotto is built entirely on-chain. All entries, draws, and payouts are verifiable and open-source. We never custody your funds — you remain in full control at all times.'
+    content: 'Solotto is built entirely on-chain. All entries, draws, and payouts are verifiable and open-source. We never custody your funds — you stay in control at all times.'
   }
 ];
 
@@ -83,7 +83,7 @@ export default function HowItWorks() {
         variants={itemVariants}
         style={{ fontSize: '1.1rem', marginBottom: '2rem', textAlign: 'center' }}
       >
-        Solotto is a decentralized jackpot system on Solana. It offers two recurring prize pools — the <strong style={{ color: '#ff4d4d' }}>Hourly Pot</strong> and the <strong style={{ color: '#ff4d4d' }}>Weekly Pot</strong> — designed for transparency, fairness, and fun.
+        Solotto is a decentralized jackpot system on Solana. Every 10 minutes, one lucky wallet wins the pot. It's fast, fair, and fully transparent.
       </motion.p>
 
       <motion.div variants={containerVariants}>

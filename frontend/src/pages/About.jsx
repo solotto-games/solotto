@@ -19,7 +19,7 @@ const FEATURES = [
   'Fully on-chain and transparent mechanics',
   'No registration or KYC required',
   'Rewards scaled to your contribution',
-  'Extra incentives for $LOTTO token holders',
+  '1.3x entry multiplier for $LOTTO holders',
 ];
 
 export default function About() {
@@ -64,10 +64,8 @@ export default function About() {
         style={{ fontSize: '1.1rem', marginBottom: '2rem', textAlign: 'center' }}
       >
         <strong style={{ color: '#00d4ff' }}>SOLOTTO</strong> is a decentralized
-        jackpot protocol built on the Solana blockchain. It offers a fair,
-        transparent, and engaging way to win rewards through two rotating prize
-        pools: the <strong style={{ color: '#ff4d4d' }}>Hourly Pot</strong> and
-        the <strong style={{ color: '#ff4d4d' }}>Weekly Pot</strong>.
+        jackpot protocol built on Solana. Every 10 minutes, one lucky participant
+        wins the entire SOL pot — fast, fair, and fully transparent.
       </motion.p>
 
       <motion.section variants={itemVariants} style={{ marginBottom: '2rem' }}>
@@ -82,46 +80,10 @@ export default function About() {
           How It Works
         </h2>
         <p style={{ fontSize: '1rem', marginBottom: '1.5rem' }}>
-          Users participate by contributing SOL to one or both jackpot pools. Each
-          contribution acts as a ticket — the more SOL you commit, the higher your
-          chance of winning. Winners are randomly drawn at the end of each round
-          using Solana’s secure, on-chain mechanics.
+          Simply enter the draw by contributing any amount of SOL. The more you
+          contribute, the higher your chances of winning. A random winner is
+          automatically selected every 10 minutes using secure on-chain mechanics.
         </p>
-
-        <div style={{ marginBottom: '1.5rem' }}>
-          <h3
-            style={{
-              fontSize: '1.4rem',
-              fontWeight: 600,
-              color: '#e0e0e0',
-              marginBottom: '0.5rem',
-            }}
-          >
-            🔹 Hourly Pot
-          </h3>
-          <p style={{ fontSize: '1rem' }}>
-            The Hourly Pot draws every 60 minutes. All users who enter within the
-            hour are eligible, with one wallet randomly selected to claim the
-            entire SOL balance.
-          </p>
-        </div>
-
-        <div>
-          <h3
-            style={{
-              fontSize: '1.4rem',
-              fontWeight: 600,
-              color: '#e0e0e0',
-              marginBottom: '0.5rem',
-            }}
-          >
-            🔸 Weekly Pot
-          </h3>
-          <p style={{ fontSize: '1rem' }}>
-            The Weekly Pot accumulates entries over 7 days, offering larger
-            rewards. A single winner is drawn weekly, claiming the full pot.
-          </p>
-        </div>
       </motion.section>
 
       <motion.section variants={itemVariants} style={{ marginBottom: '2rem' }}>
@@ -136,11 +98,9 @@ export default function About() {
           Boost Your Odds with $LOTTO
         </h2>
         <p style={{ fontSize: '1rem' }}>
-          Solotto’s native token, <strong style={{ color: '#ff4d4d' }}>$LOTTO</strong>,
-          supercharges your entries. Holding any amount of $LOTTO grants a{' '}
-          <strong style={{ color: '#00d4ff' }}>1.3x multiplier</strong> on all your
-          entries, giving dedicated community members a competitive edge in both
-          pots.
+          Holding any amount of <strong style={{ color: '#ff4d4d' }}>$LOTTO</strong> gives you a{' '}
+          <strong style={{ color: '#00d4ff' }}>1.3x multiplier</strong> on your entries,
+          helping loyal holders increase their odds in every round.
         </p>
       </motion.section>
 
@@ -195,8 +155,7 @@ export default function About() {
           color: 'transparent',
         }}
       >
-        Join thousands of users competing for hourly and weekly rewards — powered
-        by Solana’s lightning-fast blockchain.
+        Compete every 10 minutes for the prize pool — powered by Solana’s lightning-fast blockchain.
       </motion.p>
     </motion.div>
   );

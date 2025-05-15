@@ -18,39 +18,39 @@ const itemVariants = {
 const TERMS_SECTIONS = [
   {
     title: '1. Acceptance of Terms',
-    content: 'By accessing or using the SOLPOT platform ("SOLPOT", "we", "our", or "us"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree with these Terms, please do not use SOLPOT.'
+    content: 'By accessing or using the SOLOTTO platform ("SOLOTTO", "we", "our", or "us"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree with these Terms, please do not use SOLOTTO.'
   },
   {
     title: '2. Eligibility',
-    content: 'You must be at least 18 years old or the age of majority in your jurisdiction to use SOLPOT. By using the platform, you represent and warrant that you meet these eligibility requirements.'
+    content: 'You must be at least 18 years old or the age of majority in your jurisdiction to use SOLOTTO. By using the platform, you represent and warrant that you meet these eligibility requirements.'
   },
   {
     title: '3. Platform Description',
-    content: 'SOLPOT is a decentralized application on the Solana blockchain that allows users to enter randomized jackpot pools by contributing SOL. The platform operates two types of jackpots: Hourly Pot (new winner every 60 minutes) and Weekly Pot (single winner every 7 days).'
+    content: 'SOLOTTO is a decentralized application on the Solana blockchain that allows users to enter randomized jackpot draws by contributing SOL. The platform runs rapid draws every 10 minutes, where one wallet is randomly selected to receive the entire pot.'
   },
   {
-    title: '4. Token Utility ($POT)',
-    content: 'SOLPOT may offer utility features through its native token ($POT), such as increased odds of winning jackpots. Holding $POT does not guarantee winnings and is not an investment contract or financial security.'
+    title: '4. Token Utility ($LOTTO)',
+    content: 'SOLOTTO offers utility features through its native token ($LOTTO), such as increased odds of winning jackpots. Holding $LOTTO does not guarantee winnings and is not an investment contract or financial security.'
   },
   {
     title: '5. No Refunds',
-    content: 'All SOL contributed to SOLPOT pots are final. There are no refunds, withdrawals, or reversals once an entry has been submitted. Users participate at their own discretion and risk.'
+    content: 'All SOL contributed to SOLOTTO draws are final. There are no refunds, withdrawals, or reversals once an entry has been submitted. Users participate at their own discretion and risk.'
   },
   {
     title: '6. No Custodial Services',
-    content: 'SOLPOT does not custody or control your funds. All actions, including entries and payouts, are executed on-chain through smart contracts. You are solely responsible for the safety and management of your wallet and private keys.'
+    content: 'SOLOTTO does not custody or control your funds. All actions, including entries and payouts, are executed on-chain through smart contracts. You are solely responsible for the safety and management of your wallet and private keys.'
   },
   {
     title: '7. No Warranties',
-    content: 'SOLPOT is provided "as is" and "as available" without warranties of any kind. We do not guarantee uptime, functionality, or fitness for a particular purpose. Use of the platform is at your own risk.'
+    content: 'SOLOTTO is provided "as is" and "as available" without warranties of any kind. We do not guarantee uptime, functionality, or fitness for a particular purpose. Use of the platform is at your own risk.'
   },
   {
     title: '8. Limitation of Liability',
-    content: 'In no event shall SOLPOT, its team, affiliates, or contributors be liable for any direct, indirect, incidental, or consequential damages arising out of or related to the use of the platform.'
+    content: 'In no event shall SOLOTTO, its team, affiliates, or contributors be liable for any direct, indirect, incidental, or consequential damages arising out of or related to the use of the platform.'
   },
   {
     title: '9. Jurisdiction & Compliance',
-    content: 'You are solely responsible for ensuring that your use of SOLPOT complies with all applicable laws and regulations in your jurisdiction. SOLPOT does not operate in or target any specific regulatory environment.'
+    content: 'You are solely responsible for ensuring that your use of SOLOTTO complies with all applicable laws and regulations in your jurisdiction. SOLOTTO does not operate in or target any specific regulatory environment.'
   },
   {
     title: '10. Changes to Terms',
@@ -58,14 +58,14 @@ const TERMS_SECTIONS = [
   },
   {
     title: '11. Contact',
-    content: 'If you have questions about these Terms, you can contact us on X or at <a href="mailto:help@solpot.fun">help@solpot.fun</a>.'
+    content: 'If you have questions about these Terms, you can contact us on X.'
   }
 ];
 
 export default function Terms() {
   return (
     <motion.div
-      className="sop-page-container"
+      className="solotto-page-container"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
