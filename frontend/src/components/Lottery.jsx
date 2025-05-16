@@ -7,7 +7,7 @@ import axios from 'axios';
 import Countdown from "react-countdown";
 
 const MINUTE_MS = 60 * 1000;
-const LOTTO_TOKEN_MINT = new PublicKey('7aYvpuG7WTU4dDGJtHq1vAF3fjQXwksqLzsFjXtPxEcz');
+const LOTTO_TOKEN_MINT = new PublicKey('6TEeFC8GpVwMEEmY5usUN6sKZD7pHsxYmMVUuahspump');
 const adminPublicKey = new PublicKey("EhQewZWWVA1jqZqNpAGCDLamh3cAD5nqMefWkfuffdNq");
 
 // Helper functions
