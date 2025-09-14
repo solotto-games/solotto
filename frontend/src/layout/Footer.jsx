@@ -37,7 +37,6 @@ export default function Footer() {
         {/* Right: Socials */}
         <div className="solotto-footer__right">
           <a href="https://x.com/solotto_onsol" target="_blank" rel="noopener noreferrer">Twitter</a>
-          <a href="https://github.com/solotto-games/solotto" target="_blank" rel="noopener noreferrer">GitHub</a>
         </div>
 
         {/* Far Right: Copy Button */}
